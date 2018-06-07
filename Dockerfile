@@ -41,5 +41,6 @@ RUN composer/composer.phar install
 
 USER root
 
-
+# the Specific dir is supposed to come from some persistent storage
+VOLUME /var/www/Specific
 
