@@ -10,14 +10,23 @@ RUN apt-get update \
  && apt-get install -y -q --no-install-recommends \
     unzip \
     git \
+    libjpeg62-turbo \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    libfreetype6-dev \
     ssmtp \
  && apt-get clean \
  && rm -r /var/lib/apt/lists/* \
-&& a2enmod expires headers
+ && a2enmod expires headers
 
 # for mail configuration see https://binfalse.de/2016/11/25/mail-support-for-docker-s-php-fpm/
 
 
+# install php db extensions
+RUN docker-php-source extract \
+ && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+ && docker-php-ext-install -j$(nproc) pdo pdo_mysql \
+ && docker-php-source delete
 
 # install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
