@@ -7,6 +7,16 @@ This is the source repository for the Baïkal CalDAV and CardDAV server.
 
 Head to [sabre.io/baikal][2] for information about installation, upgrading and troubleshooting.
 
+
+Docker
+------
+
+Baïkal can be run through Docker.
+This version is distributed as an automated build at [binfalse/baikal](https://hub.docker.com/r/binfalse/baikal/).
+You'll find some documentation at [Running Baïkal through Docker](https://binfalse.de/2018/06/07/baikal-through-docker/).
+
+
+
 Upgrading from 0.2.7
 --------------------
 
