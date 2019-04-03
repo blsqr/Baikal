@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:7.2-apache
 MAINTAINER martin scharm <https://binfalse.de/contact>
 
 # we're working from /var/www, not /var/www/html
