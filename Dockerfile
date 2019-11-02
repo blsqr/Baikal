@@ -6,7 +6,8 @@ MAINTAINER martin scharm <https://binfalse.de/contact>
 WORKDIR /var/www
 
 # install tools necessary for the setup
-RUN apt-get update \
+RUN echo "deb http://ftp.de.debian.org/debian/ testing main" >> /etc/apt/sources.list\
+ && apt-get update \
  && apt-get install -y -q --no-install-recommends \
     unzip \
     git \
