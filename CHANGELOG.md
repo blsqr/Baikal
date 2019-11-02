@@ -1,8 +1,37 @@
 ChangeLog
 =========
 
-0.5.0 (????-??-??)
+0.6.0 (2019-08-25)
 ------------------
+
+* Added support for php 7.3
+* REMOVED support for php 5.x
+* Enabled event invitation plugin
+* Enabled calendar sharing plugin
+* Ships with sabre/dav 4.0.1
+
+0.5.3 (2019-05-13)
+------------------
+
+* Added confirmation page before upgrading to prevent aborting upgrades accidentally
+* Ships with sabre/dav 3.2.3
+
+
+0.5.2 (2019-04-26)
+------------------
+
+* Fixed creating new users/calendars
+* New front page
+* Increased timeout for database upgrades
+* Ships with sabre/dav 3.2.3
+
+
+0.5.1 (2019-04-21)
+------------------
+
+* Fixed authentication bypass
+* Upgraded sabre/dav to version 3.2.3
+* Support for PHP 7.2
 
 
 0.4.6 (2016-08-19)

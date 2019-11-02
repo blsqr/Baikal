@@ -5,7 +5,7 @@
 #  (c) 2013 Jérôme Schneider <mail@jeromeschneider.fr>
 #  All rights reserved
 #
-#  http://baikal-server.com
+#  http://sabre.io/baikal
 #
 #  This script is part of the Baïkal Server project. The Baïkal
 #  Server project is free software; you can redistribute it
@@ -169,12 +169,36 @@ class Server {
             $this->server->addPlugin(new \Sabre\CalDAV\Plugin());
             $this->server->addPlugin(new \Sabre\CalDAV\ICSExportPlugin());
             $this->server->addPlugin(new \Sabre\CalDAV\Schedule\Plugin());
+            $this->server->addPlugin(new \Sabre\DAV\Sharing\Plugin());
+            $this->server->addPlugin(new \Sabre\CalDAV\SharingPlugin());
+            if (defined("BAIKAL_INVITE_FROM") && BAIKAL_INVITE_FROM !== "") {
+                $this->server->addPlugin(new \Sabre\CalDAV\Schedule\IMipPlugin(BAIKAL_INVITE_FROM));
+            }
         }
         if ($this->enableCardDAV) {
             $this->server->addPlugin(new \Sabre\CardDAV\Plugin());
             $this->server->addPlugin(new \Sabre\CardDAV\VCFExportPlugin());
         }
 
+        $this->server->on('exception', [$this, 'exception']);
+
+    }
+
+    /**
+     * Log failed accesses, for further processing by other tools (fail2ban)
+     *
+     * @return void
+     */
+    function exception($e) {
+        if ($e instanceof \Sabre\DAV\Exception\NotAuthenticated) {
+            // Applications may make their first call without auth so don't log these attempts
+            // Pattern from sabre/dav/lib/DAV/Auth/Backend/AbstractDigest.php
+            if (strpos($e->getMessage(), "No 'Authorization: Digest' header found.") === false) {
+                error_log('user not authorized: Baikal DAV: ' . $e->getMessage());
+            }
+        } else {
+            error_log($e);
+        }
     }
 
 }
